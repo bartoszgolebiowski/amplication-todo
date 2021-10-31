@@ -5,7 +5,9 @@ import {
   CreateProps,
   TextInput,
   SelectInput,
+  ReferenceInput,
 } from "react-admin";
+import { UserTitle } from "../user/UserTitle";
 
 export const TodoCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -23,6 +25,9 @@ export const TodoCreate = (props: CreateProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
+        <ReferenceInput source="user.id" reference="User" label="user">
+          <SelectInput optionText={UserTitle} />
+        </ReferenceInput>
       </SimpleForm>
     </Create>
   );

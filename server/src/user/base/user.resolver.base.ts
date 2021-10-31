@@ -14,6 +14,8 @@ import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { TodoFindManyArgs } from "../../todo/base/TodoFindManyArgs";
+import { Todo } from "../../todo/base/Todo";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -189,5 +191,31 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Todo])
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async todos(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: TodoFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Todo[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Todo",
+    });
+    const results = await this.service.findTodos(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 }
