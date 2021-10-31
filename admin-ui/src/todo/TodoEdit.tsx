@@ -3,9 +3,9 @@ import {
   Edit,
   SimpleForm,
   EditProps,
-  TextInput,
-  SelectInput,
   ReferenceInput,
+  SelectInput,
+  TextInput,
 } from "react-admin";
 import { UserTitle } from "../user/UserTitle";
 
@@ -13,6 +13,9 @@ export const TodoEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <ReferenceInput source="user.id" reference="User" label="AssignedTo">
+          <SelectInput optionText={UserTitle} />
+        </ReferenceInput>
         <TextInput label="Name" source="name" />
         <SelectInput
           source="status"
@@ -25,9 +28,6 @@ export const TodoEdit = (props: EditProps): React.ReactElement => {
           optionText="label"
           optionValue="value"
         />
-        <ReferenceInput source="user.id" reference="User" label="user">
-          <SelectInput optionText={UserTitle} />
-        </ReferenceInput>
       </SimpleForm>
     </Edit>
   );

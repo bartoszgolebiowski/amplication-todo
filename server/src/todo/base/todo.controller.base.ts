@@ -61,22 +61,22 @@ export class TodoControllerBase {
       data: {
         ...data,
 
-        user: {
-          connect: data.user,
+        assignedTo: {
+          connect: data.assignedTo,
         },
       },
       select: {
+        assignedTo: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         id: true,
         name: true,
         status: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
   }
@@ -114,17 +114,17 @@ export class TodoControllerBase {
     const results = await this.service.findMany({
       ...args,
       select: {
+        assignedTo: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         id: true,
         name: true,
         status: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     return results.map((result) => permission.filter(result));
@@ -157,17 +157,17 @@ export class TodoControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
+        assignedTo: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         id: true,
         name: true,
         status: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     if (result === null) {
@@ -222,22 +222,22 @@ export class TodoControllerBase {
         data: {
           ...data,
 
-          user: {
-            connect: data.user,
+          assignedTo: {
+            connect: data.assignedTo,
           },
         },
         select: {
+          assignedTo: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           id: true,
           name: true,
           status: true,
           updatedAt: true,
-
-          user: {
-            select: {
-              id: true,
-            },
-          },
         },
       });
     } catch (error) {
@@ -271,17 +271,17 @@ export class TodoControllerBase {
       return await this.service.delete({
         where: params,
         select: {
+          assignedTo: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           id: true,
           name: true,
           status: true,
           updatedAt: true,
-
-          user: {
-            select: {
-              id: true,
-            },
-          },
         },
       });
     } catch (error) {

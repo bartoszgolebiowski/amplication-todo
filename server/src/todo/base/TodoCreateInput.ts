@@ -1,11 +1,20 @@
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsEnum, ValidateNested } from "class-validator";
-import { EnumTodoStatus } from "./EnumTodoStatus";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { ValidateNested, IsString, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
+import { EnumTodoStatus } from "./EnumTodoStatus";
 @InputType()
 class TodoCreateInput {
+  @ApiProperty({
+    required: true,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @Field(() => UserWhereUniqueInput)
+  assignedTo!: UserWhereUniqueInput;
+
   @ApiProperty({
     required: true,
     type: String,
@@ -21,14 +30,5 @@ class TodoCreateInput {
   @IsEnum(EnumTodoStatus)
   @Field(() => EnumTodoStatus)
   status!: "InProgress" | "Done" | "Todo";
-
-  @ApiProperty({
-    required: true,
-    type: () => UserWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => UserWhereUniqueInput)
-  @Field(() => UserWhereUniqueInput)
-  user!: UserWhereUniqueInput;
 }
 export { TodoCreateInput };

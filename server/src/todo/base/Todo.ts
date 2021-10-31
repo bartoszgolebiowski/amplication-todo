@@ -1,11 +1,19 @@
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsEnum, ValidateNested } from "class-validator";
+import { User } from "../../user/base/User";
+import { ValidateNested, IsDate, IsString, IsEnum } from "class-validator";
 import { Type } from "class-transformer";
 import { EnumTodoStatus } from "./EnumTodoStatus";
-import { User } from "../../user/base/User";
 @ObjectType()
 class Todo {
+  @ApiProperty({
+    required: true,
+    type: () => User,
+  })
+  @ValidateNested()
+  @Type(() => User)
+  assignedTo?: User;
+
   @ApiProperty({
     required: true,
   })
@@ -47,13 +55,5 @@ class Todo {
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
-
-  @ApiProperty({
-    required: true,
-    type: () => User,
-  })
-  @ValidateNested()
-  @Type(() => User)
-  user?: User;
 }
 export { Todo };
