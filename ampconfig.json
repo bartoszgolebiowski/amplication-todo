@@ -1,0 +1,19 @@
+{
+  "dataServiceGeneratorVersion": "0.10.1",
+  "appInfo": {
+    "name": "Todos",
+    "description": "Todo application for research purpose",
+    "version": "qmwdusru",
+    "id": "ckvf4p8ir9549761bs6mhlss8eo",
+    "url": "https://app.amplication.com/ckvf4p8ir9549761bs6mhlss8eo",
+    "settings": {
+      "dbHost": "localhost",
+      "dbName": "",
+      "dbPassword": "admin",
+      "dbPort": 5432,
+      "dbUser": "admin",
+      "appId": "ckvf4p8ir9549761bs6mhlss8eo",
+      "authProvider": "Jwt"
+    }
+  }
+}
