@@ -14,19 +14,16 @@ model User {
   lastName  String?
   password  String
   roles     String[]
-  todos     Todo[]
   updatedAt DateTime @updatedAt
   username  String   @unique
 }
 
 model Todo {
-  assignedTo   User           @relation(fields: [assignedToId], references: [id])
-  assignedToId String
-  createdAt    DateTime       @default(now())
-  id           String         @id @default(cuid())
-  name         String
-  status       EnumTodoStatus
-  updatedAt    DateTime       @updatedAt
+  createdAt DateTime       @default(now())
+  id        String         @id @default(cuid())
+  name      String
+  status    EnumTodoStatus
+  updatedAt DateTime       @updatedAt
 }
 
 enum EnumTodoStatus {
