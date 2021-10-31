@@ -36,11 +36,11 @@ export class TodoServiceBase {
     return this.prisma.todo.delete(args);
   }
 
-  async getUser(parentId: string): Promise<User | null> {
+  async getAssignedTo(parentId: string): Promise<User | null> {
     return this.prisma.todo
       .findUnique({
         where: { id: parentId },
       })
-      .user();
+      .assignedTo();
   }
 }

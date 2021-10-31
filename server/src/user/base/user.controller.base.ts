@@ -295,17 +295,17 @@ export class UserControllerBase {
     const results = await this.service.findTodos(params.id, {
       where: query,
       select: {
+        assignedTo: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         id: true,
         name: true,
         status: true,
         updatedAt: true,
-
-        user: {
-          select: {
-            id: true,
-          },
-        },
       },
     });
     return results.map((result) => permission.filter(result));

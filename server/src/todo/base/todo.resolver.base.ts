@@ -124,8 +124,8 @@ export class TodoResolverBase {
       data: {
         ...args.data,
 
-        user: {
-          connect: args.data.user,
+        assignedTo: {
+          connect: args.data.assignedTo,
         },
       },
     });
@@ -169,8 +169,8 @@ export class TodoResolverBase {
         data: {
           ...args.data,
 
-          user: {
-            connect: args.data.user,
+          assignedTo: {
+            connect: args.data.assignedTo,
           },
         },
       });
@@ -210,7 +210,7 @@ export class TodoResolverBase {
     action: "read",
     possession: "any",
   })
-  async user(
+  async assignedTo(
     @graphql.Parent() parent: Todo,
     @gqlUserRoles.UserRoles() userRoles: string[]
   ): Promise<User | null> {
@@ -220,7 +220,7 @@ export class TodoResolverBase {
       possession: "any",
       resource: "User",
     });
-    const result = await this.service.getUser(parent.id);
+    const result = await this.service.getAssignedTo(parent.id);
 
     if (!result) {
       return null;
