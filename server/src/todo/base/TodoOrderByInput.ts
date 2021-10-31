@@ -14,15 +14,6 @@ class TodoOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  assignedToId?: SortOrder;
-
-  @ApiProperty({
-    required: false,
-    enum: ["Asc", "Desc"],
-  })
-  @Field(() => SortOrder, {
-    nullable: true,
-  })
   createdAt?: SortOrder;
 
   @ApiProperty({

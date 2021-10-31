@@ -1,5 +1,5 @@
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, User, Todo } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import { PasswordService } from "../../auth/password.service";
 import { transformStringFieldUpdateInput } from "../../prisma.util";
 
@@ -59,16 +59,5 @@ export class UserServiceBase {
     args: Prisma.SelectSubset<T, Prisma.UserDeleteArgs>
   ): Promise<User> {
     return this.prisma.user.delete(args);
-  }
-
-  async findTodos(
-    parentId: string,
-    args: Prisma.TodoFindManyArgs
-  ): Promise<Todo[]> {
-    return this.prisma.user
-      .findUnique({
-        where: { id: parentId },
-      })
-      .todos(args);
   }
 }

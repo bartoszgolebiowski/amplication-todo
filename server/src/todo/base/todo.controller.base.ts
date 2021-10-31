@@ -58,20 +58,8 @@ export class TodoControllerBase {
       );
     }
     return await this.service.create({
-      data: {
-        ...data,
-
-        assignedTo: {
-          connect: data.assignedTo,
-        },
-      },
+      data: data,
       select: {
-        assignedTo: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         id: true,
         name: true,
@@ -114,12 +102,6 @@ export class TodoControllerBase {
     const results = await this.service.findMany({
       ...args,
       select: {
-        assignedTo: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         id: true,
         name: true,
@@ -157,12 +139,6 @@ export class TodoControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
-        assignedTo: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         id: true,
         name: true,
@@ -219,20 +195,8 @@ export class TodoControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: {
-          ...data,
-
-          assignedTo: {
-            connect: data.assignedTo,
-          },
-        },
+        data: data,
         select: {
-          assignedTo: {
-            select: {
-              id: true,
-            },
-          },
-
           createdAt: true,
           id: true,
           name: true,
@@ -271,12 +235,6 @@ export class TodoControllerBase {
       return await this.service.delete({
         where: params,
         select: {
-          assignedTo: {
-            select: {
-              id: true,
-            },
-          },
-
           createdAt: true,
           id: true,
           name: true,

@@ -3,19 +3,14 @@ import {
   Create,
   SimpleForm,
   CreateProps,
-  ReferenceInput,
-  SelectInput,
   TextInput,
+  SelectInput,
 } from "react-admin";
-import { UserTitle } from "../user/UserTitle";
 
 export const TodoCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <ReferenceInput source="user.id" reference="User" label="AssignedTo">
-          <SelectInput optionText={UserTitle} />
-        </ReferenceInput>
         <TextInput label="Name" source="name" />
         <SelectInput
           source="status"
