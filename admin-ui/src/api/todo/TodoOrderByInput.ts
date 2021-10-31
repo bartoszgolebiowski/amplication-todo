@@ -6,4 +6,5 @@ export type TodoOrderByInput = {
   name?: SortOrder;
   status?: SortOrder;
   updatedAt?: SortOrder;
+  userId?: SortOrder;
 };

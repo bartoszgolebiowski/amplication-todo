@@ -1,5 +1,5 @@
 import { PrismaService } from "nestjs-prisma";
-import { Prisma, Todo } from "@prisma/client";
+import { Prisma, Todo, User } from "@prisma/client";
 
 export class TodoServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -34,5 +34,13 @@ export class TodoServiceBase {
     args: Prisma.SelectSubset<T, Prisma.TodoDeleteArgs>
   ): Promise<Todo> {
     return this.prisma.todo.delete(args);
+  }
+
+  async getUser(parentId: string): Promise<User | null> {
+    return this.prisma.todo
+      .findUnique({
+        where: { id: parentId },
+      })
+      .user();
   }
 }

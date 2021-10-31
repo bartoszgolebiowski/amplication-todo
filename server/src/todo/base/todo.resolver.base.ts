@@ -14,6 +14,7 @@ import { DeleteTodoArgs } from "./DeleteTodoArgs";
 import { TodoFindManyArgs } from "./TodoFindManyArgs";
 import { TodoFindUniqueArgs } from "./TodoFindUniqueArgs";
 import { Todo } from "./Todo";
+import { User } from "../../user/base/User";
 import { TodoService } from "../todo.service";
 
 @graphql.Resolver(() => Todo)
@@ -120,7 +121,13 @@ export class TodoResolverBase {
     // @ts-ignore
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        user: {
+          connect: args.data.user,
+        },
+      },
     });
   }
 
@@ -159,7 +166,13 @@ export class TodoResolverBase {
       // @ts-ignore
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          user: {
+            connect: args.data.user,
+          },
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -189,5 +202,29 @@ export class TodoResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => User, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Todo",
+    action: "read",
+    possession: "any",
+  })
+  async user(
+    @graphql.Parent() parent: Todo,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<User | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "User",
+    });
+    const result = await this.service.getUser(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
   }
 }
